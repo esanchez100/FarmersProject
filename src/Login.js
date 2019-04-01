@@ -13,20 +13,24 @@ import {
     CardFooter,
     Text
 } from "reactstrap";
-import getAllFarmers from "./service.js"
 import axios from "axios"
+import { getByEmail } from "./service.js"
+import Homepage from "./Homepage"
 
 class Login extends React.Component {
     state = {
+        viewLogin: true,
+        viewHomepage: false,
         email: "",
-        valid: true,
+        emailValid: true,
         isLoaded: false,
         items: [],
+        error: {},
         loginDisabled: true
     };
     componentDidMount() {
         //call the axios function to get the data
-        this.getData();
+        // this.getData();
     }
     getData = () => {
         axios.get("https://jsonplaceholder.typicode.com/users")
@@ -36,7 +40,7 @@ class Login extends React.Component {
                     console.log("result", result)
                     this.setState({
                         isLoaded: true,
-                        items: result.data
+                        items: result
                     },
                         // () => {
                         //     this.compareData();
@@ -48,7 +52,10 @@ class Login extends React.Component {
                                 isLoaded: true,
                                 error
                             }
+
                             )
+                            console.log("this is our error message")
+                            console.log(this.state.error);
                         })
                 })
     }
@@ -87,33 +94,40 @@ class Login extends React.Component {
     clearForm = e => {
         this.setState({
             email: "",
-            valid: ""
+            emailValid: true
         });
     };
     loginButtonClick = () => {
         console.log("The login button was clicked")
         // const email = this.state.email
         // console.log("email", email)
-        this.compareData();
+        //this.getData();
+        getByEmail(this.state.email).then(
 
-    }
+            (result) => {
+                console.log("result", result)
+                this.setState({
+                    items: result.data
+                })
+                // // () => {
+                // //     this.compareData();
+                // // })
+                // //},
+                // // handling errors here
+                // (error) => {
+                //     this.setState({
+                //         isLoaded: true,
+                //         error
+                //     }
 
-    emailValidation = () => {
-        // const email = this.state.email;
-        // console.log("passed email", email)
-        // const word = email.includes("@")
-        // const com = email.includes(".")
+                //     )
+                //     console.log("this is our error message")
+                //     console.log(this.state.error);
+                // })
+                //})
+                this.compareData();
 
-        // if (word && com) {
-        //     this.setState({ loginDisabled: false });
-        //     // return email;
-        // } else {
-        //     this.setState({ loginDisabled: true })
-
-        //     // return false;
-        // }
-
-
+            })
     }
     compareData = () => {
         const items = this.state.items;
@@ -124,10 +138,11 @@ class Login extends React.Component {
         for (let i = 0; i < items.length; i++) {
             if (items[i].email === email) {
                 //redirects to the homepage
-                console.log("forloop items", items[i].email)
-                this.props.history.push("/homepage");
+                console.log("email match", items[i].email)
+                this.setState({ viewHomepage: true, viewLogin: false })
             } else {
-                this.setState({ emailValid: false })
+                console.log("no email match")
+                this.setState({ viewHomepage: false, viewLogin: true, emailValid: false })
             }
         }
     }
@@ -137,29 +152,34 @@ class Login extends React.Component {
         console.log(items);
         return (
             <div className="container" >
-                <div className="row">
-                    <div className="col"></div>
+                {!this.state.viewLogin ? <span></span> : (
+                    <div className="row">
+                        <div className="col"></div>
 
-                    <div className="col-6">
-                        <div>
-                            <p style={{ textAlign: "center", fontSize: "2em" }}> Welcome to Dunder-Mifflin</p>
-                            <p style={{ textAlign: "center" }}>
-                                Welcome to the dunder-mifflin internal network.
+                        <div className="col-6">
+                            <div>
+                                <p style={{ textAlign: "center", fontSize: "2em" }}> Welcome to Dunder-Mifflin</p>
+                                <p style={{ textAlign: "center" }}>
+                                    Welcome to the dunder-mifflin internal network.
                          <br />
-                                Please enter a username to view your posts and comments.
+                                    Please enter a username to view your posts and comments.
                         </p>
-                        </div>
+                            </div>
 
-                        <div>
-                            {!this.state.emailValid ? (<span></span>) : (<p style={{ color: "red" }}>Please make sure this is a valid email address</p>)}
-                            <Input name="email" type="email" value={this.state.email} onChange={this.handleChange} placeholder="email" required />
+                            <div>
+                                {this.state.emailValid ? (<span></span>) : (<p style={{ color: "red" }}> Invalid email</p>)}
+                                <Input name="email" type="email" value={this.state.email} onChange={this.handleChange} placeholder="email" required />
 
-                            <button className="btn btn-secondary" size="block" onClick={this.loginButtonClick} disabled={enableButton}> Login</button>
-                            <span></span>
+                                <button className="btn btn-secondary" size="block" onClick={this.loginButtonClick} disabled={enableButton}> Login</button>
+                                <span></span>
+                            </div>
                         </div>
-                    </div>
-                    <div className="col"></div>
-                </div>
+                        <div className="col"></div>
+                    </div>)}
+                {/* {this.state.viewHomepage ? (
+                    <div>
+                        <Homepage user={this.state.items[0]}></Homepage>
+                    </div>) : (<div> </div>)} */}
 
             </div>
         );
