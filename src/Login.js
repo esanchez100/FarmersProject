@@ -8,18 +8,49 @@ import {
     Button,
     Card,
     CardHeader,
-    //CardImg,
+    CardImg,
     CardBody,
     CardFooter,
     Text
 } from "reactstrap";
+import getAllFarmers from "./service.js"
+import axios from "axios"
 
 class Login extends React.Component {
     state = {
         email: "",
-        valid: true
+        valid: true,
+        isLoaded: false,
+        items: []
     };
-    componentDidMount() { }
+    componentDidMount() {
+        //call the axios function to get the data
+        this.getData();
+    }
+    getData = () => {
+        axios.get("https://jsonplaceholder.typicode.com/users")
+            .then(
+
+                (result) => {
+                    console.log("result", result)
+                    this.setState({
+                        isLoaded: true,
+                        items: result.data
+                    },
+                        // () => {
+                        //     this.compareData();
+                        // })
+                        //},
+                        // handling errors here
+                        (error) => {
+                            this.setState({
+                                isLoaded: true,
+                                error
+                            }
+                            )
+                        })
+                })
+    }
 
     handleChange = e => {
         e.preventDefault();
@@ -46,20 +77,52 @@ class Login extends React.Component {
         console.log("The login button was clicked")
         const email = this.state.email
         console.log("email", email)
-        this.emailValidation(email);
-        //call the axios function to get the data
+
+        //validates the email
+        const validEmail = this.emailValidation(email);
+        if (validEmail) {
+            this.compareData();
+
+        }
+
     }
+
     emailValidation = (email) => {
         console.log("passed email", email)
         const word = email.includes("@")
-        if (word) {
-            this.setState({ emailValid: false });
-        } else { this.setState({ emailValid: true }) }
+        const com = email.includes(".")
+
+        if (word && com) {
+            this.setState({ email: email });
+            return email;
+        } else {
+            this.setState({ email: "" })
+            return false
+        }
+
 
     }
+    compareData = () => {
+        const items = this.state.items;
+        console.log("comparing data", items)
+        const email = this.state.email;
+        console.log("comparing email", email)
+
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].email === email) {
+                //redirects to the homepage
+                console.log("forloop items", items[i].email)
+                this.props.history.push("/homepage");
+            } else {
+                this.setState({ emailValid: false })
+            }
+        }
+    }
     render() {
+        const items = this.state.items;
+        console.log(items);
         return (
-            <div className="container">
+            <div className="container" >
                 <div className="row">
                     <div className="col"></div>
 

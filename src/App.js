@@ -8,6 +8,7 @@ class App extends Component {
     return (
       <React.Fragment>
         <Route exact path="/" component={Login} />
+        <Route exact path="/homepage" component={Homepage} />
       </React.Fragment>
     );
   }
