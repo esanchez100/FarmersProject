@@ -21,7 +21,8 @@ class Login extends React.Component {
         email: "",
         valid: true,
         isLoaded: false,
-        items: []
+        items: [],
+        loginDisabled: true
     };
     componentDidMount() {
         //call the axios function to get the data
@@ -59,6 +60,22 @@ class Login extends React.Component {
         this.setState({
             [name]: value
         });
+
+        const email = value;
+        console.log("passed email", email)
+        const word = email.includes("@")
+        const com = email.includes(".")
+
+        if (word && com) {
+            this.setState({ loginDisabled: false });
+            // return email;
+        } else {
+            this.setState({ loginDisabled: true })
+
+            // return false;
+        }
+
+        // this.emailValidation();
         // const validPass = this.passwordValidation(password);
         // if (validEmail) {
         //     this.setState({ [email]: email });
@@ -73,32 +90,28 @@ class Login extends React.Component {
             valid: ""
         });
     };
-    loginClick = () => {
+    loginButtonClick = () => {
         console.log("The login button was clicked")
-        const email = this.state.email
-        console.log("email", email)
-
-        //validates the email
-        const validEmail = this.emailValidation(email);
-        if (validEmail) {
-            this.compareData();
-
-        }
+        // const email = this.state.email
+        // console.log("email", email)
+        this.compareData();
 
     }
 
-    emailValidation = (email) => {
-        console.log("passed email", email)
-        const word = email.includes("@")
-        const com = email.includes(".")
+    emailValidation = () => {
+        // const email = this.state.email;
+        // console.log("passed email", email)
+        // const word = email.includes("@")
+        // const com = email.includes(".")
 
-        if (word && com) {
-            this.setState({ email: email });
-            return email;
-        } else {
-            this.setState({ email: "" })
-            return false
-        }
+        // if (word && com) {
+        //     this.setState({ loginDisabled: false });
+        //     // return email;
+        // } else {
+        //     this.setState({ loginDisabled: true })
+
+        //     // return false;
+        // }
 
 
     }
@@ -120,6 +133,7 @@ class Login extends React.Component {
     }
     render() {
         const items = this.state.items;
+        const enableButton = this.state.loginDisabled;
         console.log(items);
         return (
             <div className="container" >
@@ -140,7 +154,7 @@ class Login extends React.Component {
                             {!this.state.emailValid ? (<span></span>) : (<p style={{ color: "red" }}>Please make sure this is a valid email address</p>)}
                             <Input name="email" type="email" value={this.state.email} onChange={this.handleChange} placeholder="email" required />
 
-                            <Button className="btn btn-secondary" size="block" onClick={this.loginClick}> Login</Button>
+                            <button className="btn btn-secondary" size="block" onClick={this.loginButtonClick} disabled={enableButton}> Login</button>
                             <span></span>
                         </div>
                     </div>
