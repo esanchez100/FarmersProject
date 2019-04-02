@@ -1,21 +1,21 @@
 import React from "react";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import './login.css';
 import {
-    FormGroup,
-    InputGroup,
+    // FormGroup,
+    // InputGroup,
     Input,
-    Button,
-    Card,
-    CardHeader,
-    CardImg,
-    CardBody,
-    CardFooter,
-    Text
+    // Button,
+    // Card,
+    // CardHeader,
+    // CardImg,
+    // CardBody,
+    // CardFooter,
+    // Text
 } from "reactstrap";
 import axios from "axios"
 import { getByEmail } from "./service.js"
-import Homepage from "./Homepage"
+// import Homepage from "./Homepage"
 
 class Login extends React.Component {
     state = {
@@ -103,30 +103,12 @@ class Login extends React.Component {
         // console.log("email", email)
         //this.getData();
         getByEmail(this.state.email).then(
-
             (result) => {
                 console.log("result", result)
                 this.setState({
                     items: result.data
                 })
-                // // () => {
-                // //     this.compareData();
-                // // })
-                // //},
-                // // handling errors here
-                // (error) => {
-                //     this.setState({
-                //         isLoaded: true,
-                //         error
-                //     }
-
-                //     )
-                //     console.log("this is our error message")
-                //     console.log(this.state.error);
-                // })
-                //})
                 this.compareData();
-
             })
     }
     compareData = () => {
@@ -139,10 +121,11 @@ class Login extends React.Component {
             if (items[i].email === email) {
                 //redirects to the homepage
                 console.log("email match", items[i].email)
-                this.setState({ viewHomepage: true, viewLogin: false })
+                // this.setState({ viewHomepage: true, viewLogin: false })
+                this.props.history.push("/" + items[i].id);
             } else {
                 console.log("no email match")
-                this.setState({ viewHomepage: false, viewLogin: true, emailValid: false })
+                //this.setState({ viewHomepage: false, viewLogin: true, emailValid: false })
             }
         }
     }
