@@ -4,7 +4,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 In the command line run: git clone https://github.com/esanchez100/FarmersProject.git
 
 Make sure you go into the farmers_app folder: cd farmers_app
+Run npm install
 Run npm start to view the project in your browser
+note: you might need to run npm axios if you get an error
 
 ----Extra Misc Info-----
 ## Available Scripts
