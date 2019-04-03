@@ -1,0 +1,64 @@
+/* Main profile container  grid*/
+.left { grid-area: prof; }
+
+.right { grid-area: post; }
+
+.main-container {
+  display: grid;
+  grid-template-areas:
+    
+    'prof post post post post post';
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+.main-container > div {
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  /* text-align: center; */
+  /* padding: 20px 0; */
+  /* font-size: 30px; */
+}
+.profileBox{
+    border:black 2px solid;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* profile container grid */
+.profile { grid-area: header; }
+.name{grid-area:name;}
+.profile1 { grid-area: profile1; }
+.profile2{grid-area: profile2; }
+.profile3{grid-area: profile3; }
+.address { grid-area: address; }
+.phone { grid-area: phone; }
+.email { grid-area: email; }
+
+
+.profile-container {
+  display: grid;
+  grid-template-areas:
+    'header header header header header header'
+    'name name name name name name'
+     'profile1 address address address address address'
+    'profile2 phone phone phone phone phone'
+    'profile3 email email email email email';
+  grid-gap: 10px;
+
+}
+
+.profile-container > div {
+  /* padding: 10px 10px 10px 10px;
+  margin-left: 5px; */
+  /* font-size: 12px; */
+}
+
+.post{
+    border:black 2px solid;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
