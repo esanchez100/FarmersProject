@@ -10,7 +10,6 @@ class App extends Component {
       <React.Fragment>
         <Route exact path="/" component={Login} />
         <Route exact path={"/:userId(\\d+)"} component={Homepage} />
-        {/* <Route exact path="/homepage" component={Homepage} /> */}
       </React.Fragment>
     );
   }

@@ -1,5 +1,12 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# get project
+In the command line run: git clone https://github.com/esanchez100/FarmersProject.git
+
+Make sure you go into the farmers_app folder: cd farmers_app
+Run npm start to view the project in your browser
+
+----Extra Misc Info-----
 ## Available Scripts
 
 In the project directory, you can run:
