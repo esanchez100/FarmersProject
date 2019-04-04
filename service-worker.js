@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/farmers-app/precache-manifest.ce1cfcaa67ed733f7de344bb9c1ff011.js"
+  "/FarmersProject/precache-manifest.cdb6a0a2ec00e98727bd39de53198063.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/farmers-app/index.html", {
+workbox.routing.registerNavigationRoute("/FarmersProject/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
